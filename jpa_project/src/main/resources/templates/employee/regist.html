@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>regist</title>
+</head>
+<body>
+    <h1>신규 직원 등록</h1>
+    <form action="/employee/regist" method="post">
+
+        <label>직급코드 : </label>
+        <select name="jobCode" id="jobCode">
+            <!--
+            카테고리 내용이 변화할 수 있다면 조회 해서 처리해야 하며 fetch로 처리
+             -->
+        </select><br>
+
+        <label>직원명 : </label><input type="text" name="empName"><br>
+        <label>주민등록번호  : </label><input type="text" name="empNo"><br>
+        <label>이메일  : </label><input type="text" name="email"><br>
+        <label>전화번호  : </label><input type="text" name="phone">
+        <label>급여  : </label><input type="number" name="salary">
+        <label>급여등급  : </label><input type="text" name="salLevel">
+        <br>
+
+<!--        <label>판매 상태 : </label>-->
+<!--        <select name="orderableStatus">-->
+<!--            <option value="Y">판매가능</option>-->
+<!--            <option value="N">판매불가</option>-->
+<!--        </select><br>-->
+        <input type="submit" value="전송">
+    </form>
+
+    <script>
+        fetch('/employee/job')
+            .then(res => res.json())
+            .then(data => {
+                const $jobCode = document.getElementById('jobCode');
+                console.log($jobCode)
+                for(let index in data){
+                    const $option = document.createElement('option');
+                    $option.value = data[index].jobCode;
+                    $option.textContent = data[index].jobName;
+                    $jobCode.appendChild($option);
+                }
+            });
+    </script>
+</body>
+</html>
